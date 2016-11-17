@@ -1,0 +1,84 @@
+#!/bin/bash
+android_2="Motorola Droid Razr - 2.3.7 - API 10 - 540x960"
+android_4_1="Google Nexus S - 4.1.1 - API 16 - 480x800"
+android_4="Motorola Moto X - 4.2.2 - API 17 - 720x1280"
+android_5="Google Nexus 4 - 5.1.0 - API 22 - 768x1280"
+android_6="Custom Phone - 6.0.0 - API 23 - 768x1280"
+android_tablet_6="Custom Tablet - 6.0.0 - API 23 - 2560x1600"
+
+iphone_7='09EFC7E0-8295-46C2-94A2-1A99A90F7164'
+iphone_6='F37953BD-1F7D-433C-A803-560B0036C8C3'
+iphone_5='BB31E0D7-0182-4982-95C6-80D2336F53CE'
+iphone_se='5584796C-582F-407F-822A-D016F218F898'
+
+target="simulator"
+platform="iphone"
+
+if [ $1 ]
+  then
+    if [ $1 = "android" ]
+      then
+        target="emulator"
+        platform="android"
+    fi
+fi
+
+if [ $platform = "android" ]
+  then
+    device=$android_6
+
+    if [ $2 ]
+      then
+        if [ $2 = "4.1" ]
+          then
+            device=$android_4_1
+        fi
+
+        if [ $2 = "4" ]
+          then
+            device=$android_4
+        fi
+
+        if [ $2 = "5" ]
+          then
+            device=$android_5
+        fi
+
+        if [ $2 = "6" ]
+          then
+            device=$android_6
+        fi
+
+        if [ $2 = "tablet6" ]
+          then
+            device=$android_tablet_6
+        fi
+    fi
+fi
+
+if [ $platform = "iphone" ]
+  then
+    device=$iphone_7
+
+    if [ $1 ]
+      then
+        if [ $1 = "6" ]
+          then
+            device=$iphone_6
+        fi
+
+        if [ $1 = "5" ]
+          then
+            device=$iphone_5
+        fi
+
+        if [ $1 = "SE" ]
+          then
+            device=$iphone_se
+        fi
+    fi
+fi
+
+
+appc run build --platform $platform --target $target --liveview --device-id "$device"
+
